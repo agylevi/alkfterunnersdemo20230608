@@ -14,12 +14,15 @@ public class RunnerRestController {
     @Autowired
     private LapTimeRepository lapTimeRepository;
     private RunnerRepository runnerRepository;
+    private ShoeNameRepository shoeNameRepository;
     private RunnerService runnerService;
 
     @Autowired
-    public RunnerRestController(RunnerRepository runnerRepository, LapTimeRepository lapTimeRepository, RunnerService runnerService) {
+    public RunnerRestController(RunnerRepository runnerRepository, LapTimeRepository lapTimeRepository, RunnerService runnerService,
+                                ShoeNameRepository shoeNameRepository) {
         this.runnerRepository = runnerRepository;
         this.lapTimeRepository = lapTimeRepository;
+        this.shoeNameRepository = shoeNameRepository;
         this.runnerService = runnerService;
     }
 
@@ -68,6 +71,25 @@ public class RunnerRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Runner with ID " + id + " not found");
         }
     }
+
+    @PostMapping("/{id}/setshoe")
+    public ResponseEntity setShoe(@PathVariable Long id, @RequestBody ShoeRequest shoeRequest) {
+        RunnerEntity runner = runnerRepository.findById(id).orElse(null);
+
+        if (runner != null) {
+            ShoeName shoe = new ShoeName();
+            shoe.setShoeName(shoeRequest.getShoeName());
+            runner.setShoe(shoe);
+
+            shoeNameRepository.save(shoe);
+            runnerRepository.save(runner);
+
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Runner with ID " + id + " not found");
+        }
+    }
+
     public static class LapTimeRequest {
         private int lapTimeSeconds;
 
@@ -78,5 +100,19 @@ public class RunnerRestController {
         public void setLapTimeSeconds(int lapTimeSeconds) {
             this.lapTimeSeconds = lapTimeSeconds;
         }
+    }
+
+    public static class ShoeRequest {
+        private String shoeName;
+
+        public String getShoeName() {
+            return shoeName;
+        }
+
+        public void setShoeName(String shoeName) {
+            this.shoeName = shoeName;
+        }
+
+
     }
 }
