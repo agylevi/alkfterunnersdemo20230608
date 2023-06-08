@@ -11,6 +11,7 @@ public class RunnerEntity {
     private long runnerId;
     private String runnerName;
     private long pace;
+
     private int shoeSize;
 
     @OneToMany(mappedBy = "runner")
@@ -42,6 +43,14 @@ public class RunnerEntity {
 
     public void setPace(long pace) {
         this.pace = pace;
+    }
+
+    public int getShoeSize() {
+        return shoeSize;
+    }
+
+    public void setShoeSize(int shoeSize) {
+        this.shoeSize = shoeSize;
     }
 
     public List<LapTimeEntity> getLaptimes() {
