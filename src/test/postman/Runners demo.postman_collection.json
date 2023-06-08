@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "3280806a-0a27-445f-b66a-efc67205ca2f",
-		"name": "Runners demo",
+		"_postman_id": "f49ee860-6700-4015-8ce5-098ac4867150",
+		"name": "Runners demo Copy",
 		"description": "Runners Demo postman collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9701363"
+		"_exporter_id": "27813918"
 	},
 	"item": [
 		{
@@ -74,6 +74,28 @@
 			"response": []
 		},
 		{
+			"name": "getBiggestShoeName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/runner/getBiggestShoeName",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"runner",
+						"getBiggestShoeName"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "addLapTime",
 			"event": [
 				{
@@ -132,6 +154,70 @@
 						"runner",
 						"1",
 						"addlaptime"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setShoe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Set the request URL and method",
+							"pm.test(\"Endpoint is correct\", function() {",
+							"    pm.expect(pm.request.url.toString()).to.equal(\"http://localhost:8080/api/v1/runner/1/addlaptime\");",
+							"    pm.expect(pm.request.method).to.equal(\"POST\");",
+							"});",
+							"",
+							"// Set the request headers",
+							"pm.test(\"Content-Type is set to application/json\", function() {",
+							"    pm.expect(pm.request.headers.get(\"Content-Type\")).to.equal(\"application/json\");",
+							"});",
+							"",
+							"// Set the request body",
+							"pm.test(\"Request body is correct\", function() {",
+							"    pm.expect(pm.request.body).to.match(/lapTimeSeconds/);",
+							"});",
+							"",
+							"// Set the response status code",
+							"pm.test(\"Response status code is 200 OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"shoeName\": \"NewShoe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/runner/1/setshoe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"runner",
+						"1",
+						"setshoe"
 					]
 				}
 			},
