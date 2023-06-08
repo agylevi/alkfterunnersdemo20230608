@@ -29,6 +29,20 @@ public class RunnerService {
         }
     }
 
+    public double getAveragePace() {
+        List<RunnerEntity> runners = runnerRepository.findAll();
+        if (runners != null) {
+            int totalPace = 0;
+
+            for (RunnerEntity runner : runners) {
+                totalPace += runner.getPace();
+            }
+            return (double) totalPace / runners.size();
+        } else {
+            return -1.0;
+        }
+    }
+
     public String getBiggestFeetRunnerName() {
         List<RunnerEntity> runners = runnerRepository.findAll();
 
