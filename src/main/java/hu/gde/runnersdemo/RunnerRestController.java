@@ -14,11 +14,13 @@ public class RunnerRestController {
     @Autowired
     private LapTimeRepository lapTimeRepository;
     private RunnerRepository runnerRepository;
+    private RunnerService runnerService;
 
     @Autowired
-    public RunnerRestController(RunnerRepository runnerRepository, LapTimeRepository lapTimeRepository) {
+    public RunnerRestController(RunnerRepository runnerRepository, LapTimeRepository lapTimeRepository, RunnerService runnerService) {
         this.runnerRepository = runnerRepository;
         this.lapTimeRepository = lapTimeRepository;
+        this.runnerService = runnerService;
     }
 
     @GetMapping("/{id}")
@@ -45,6 +47,11 @@ public class RunnerRestController {
     @GetMapping("")
     public List<RunnerEntity> getAllRunners() {
         return runnerRepository.findAll();
+    }
+
+    @GetMapping("/getBiggestShoeName")
+    public String getBiggestShoeName() {
+        return runnerService.getBiggestFeetRunnerName();
     }
 
     @PostMapping("/{id}/addlaptime")
